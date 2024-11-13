@@ -96,9 +96,7 @@ export default function Component() {
 
   const handleDownload = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the email and name to your backend
     console.log('Submitted:', { email, name, resourceId: selectedResource?.id })
-    // Redirect to Google Drive
     window.open(selectedResource?.driveLink, '_blank')
     setShowEmailForm(false)
     setEmail('')
@@ -123,7 +121,7 @@ export default function Component() {
               </button>
             </div>
             <div className="hidden md:flex space-x-6">
-              {["Home", "Music", "Apps", "Resources", "Gallery", "Demo Reel", "Blog", "About", "Lessons", "Contact"].map(
+              {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "About", "Contact"].map(
                 (item) => (
                   <Link
                     key={item}
@@ -142,7 +140,7 @@ export default function Component() {
           <div className="md:hidden bg-black border-t border-white/10">
             <div className="container mx-auto px-4 py-4">
               <div className="flex flex-col space-y-4">
-                {["Home", "Music", "Apps", "Resources", "Gallery", "Demo Reel", "Blog", "About", "Lessons", "Contact"].map(
+                {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "About", "Contact"].map(
                   (item) => (
                     <Link
                       key={item}

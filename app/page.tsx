@@ -27,7 +27,7 @@ export default function Home() {
               </button>
             </div>
             <div className="hidden md:flex space-x-6">
-              {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "Blog", "About", "Lessons", "Contact"].map(
+              {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "About", "Contact"].map(
                 (item) => (
                   <Link
                     key={item}
@@ -46,7 +46,7 @@ export default function Home() {
           <div className="md:hidden bg-black border-t border-white/10">
             <div className="container mx-auto px-4 py-4">
               <div className="flex flex-col space-y-4">
-                {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "Blog", "About", "Lessons", "Contact"].map(
+                {["Home", "Music", "Applications", "Resources", "Gallery", "Demo Reel", "About", "Contact"].map(
                   (item) => (
                     <Link
                       key={item}
