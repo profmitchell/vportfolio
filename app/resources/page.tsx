@@ -87,6 +87,7 @@ const resources: Resource[] = [
   }
 ]
 
+
 export default function Component() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
   const [showEmailForm, setShowEmailForm] = useState(false)

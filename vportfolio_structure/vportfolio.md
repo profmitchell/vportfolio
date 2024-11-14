@@ -1,6 +1,6 @@
 # Project Structure: vportfolio
 
-Scan Date: 2024-11-13 22:10:15
+Scan Date: 2024-11-14 00:17:24
 
 ## Directory Structure
 
@@ -6550,13 +6550,14 @@ next-env.d.ts
 
   ```
 
-- 📄 **next.config.ts** (TypeScript, 247.0B)
+- 📄 **next.config.ts** (TypeScript, 304.0B)
   ```typescript
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
+    domains: ['images.unsplash.com', 'img.youtube.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -6566,8 +6567,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
-
+module.exports = nextConfig
   ```
 
 - 📁 **app/**
@@ -7048,6 +7048,7 @@ const resources: Resource[] = [
   }
 ]
 
+
 export default function Component() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
   const [showEmailForm, setShowEmailForm] = useState(false)
@@ -7265,11 +7266,11 @@ export default function Page() {
   ```
 
   - 📁 **components/**
-    - 📄 **gallery.tsx** (React TypeScript, 8.3KB)
+    - 📄 **gallery.tsx** (React TypeScript, 12.0KB)
       ```react typescript
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -7284,6 +7285,7 @@ interface GalleryItem {
   alt: string;
   title: string;
   category: string;
+  videoId?: string;
   shaderId?: string;
 }
 
@@ -7291,64 +7293,145 @@ const galleryItems: GalleryItem[] = [
   {
     id: '1',
     type: 'image',
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/B4C40204-B73A-4678-94B2-5952594A8A03.JPG-njuMIcIrLorMDjo9Y7yCuZHc0e6tE0.jpeg",
-    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/B4C40204-B73A-4678-94B2-5952594A8A03.JPG-njuMIcIrLorMDjo9Y7yCuZHc0e6tE0.jpeg",
-    alt: "Minimalist architectural photograph of a cube in fog",
-    title: "Cube in Fog",
-    category: "Architecture"
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018672697-ce4be5b8a5c7%20copy-M34NXDqbss3haNFjPS9ML2f1ZzUaCe.jpeg",
+    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018672697-ce4be5b8a5c7%20copy-M34NXDqbss3haNFjPS9ML2f1ZzUaCe.jpeg",
+    alt: "Person walking in a foggy landscape",
+    title: "Foggy Journey",
+    category: "Photography"
   },
   {
     id: '2',
     type: 'image',
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/SEQ_PillarFogFar_0000_Ultra.jpg-mqiy25UYGxyIAHifDIgaxImM2Hqkr9.jpeg",
-    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/SEQ_PillarFogFar_0000_Ultra.jpg-mqiy25UYGxyIAHifDIgaxImM2Hqkr9.jpeg",
-    alt: "3D render of mountains with figure on cube",
-    title: "Mountain Cube",
-    category: "3D Render"
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731017794075-df88e8141beb%202-gZbuGJKU8lAR6bXQ21LdBsvuoK409F.jpeg",
+    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731017794075-df88e8141beb%202-gZbuGJKU8lAR6bXQ21LdBsvuoK409F.jpeg",
+    alt: "Silhouette of a person in a misty environment",
+    title: "Misty Silhouette",
+    category: "Photography"
   },
   {
     id: '3',
-    type: 'video',
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FOggyroom-tQB3JCBUNhVqaMZvyx9urHF7YiVCc1.mov",
-    thumbnail: "/placeholder.svg?height=400&width=400",
-    alt: "Foggy room in a brutalist building",
-    title: "Foggy Room",
-    category: "Video Art"
+    type: 'image',
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018682433-674d8bab6f18-FeYdGFODULdx1s2xXZXSdfsS6w8zjA.jpeg",
+    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018682433-674d8bab6f18-FeYdGFODULdx1s2xXZXSdfsS6w8zjA.jpeg",
+    alt: "Person standing in front of geometric shapes",
+    title: "Geometric Encounter",
+    category: "Digital Art"
   },
   {
     id: '4',
-    type: 'video',
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LVL_PillarFog_(2)-Fud0RRIPwLckFoyjnkLDXZ64sxP4FI.mp4",
-    thumbnail: "/placeholder.svg?height=400&width=400",
-    alt: "Pillar in fog",
-    title: "Pillar Fog",
-    category: "Video Art"
+    type: 'image',
+    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018674088-aff350977d03%202-MVIM9GBEG11YEyhy06cT5kwLDfvnQM.jpeg",
+    thumbnail: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-1731018674088-aff350977d03%202-MVIM9GBEG11YEyhy06cT5kwLDfvnQM.jpeg",
+    alt: "Abstract geometric shapes in a dark environment",
+    title: "Geometric Abstraction",
+    category: "Digital Art"
   },
   {
     id: '5',
-    type: 'shader',
-    src: "https://shaderpark.com/embed/-O9oklw-mfI2Rvnw3YzL",
-    thumbnail: "/placeholder.svg?height=400&width=400",
-    alt: "Abstract shader art",
-    title: "Shader 1",
-    category: "Shader Art",
-    shaderId: "-O9oklw-mfI2Rvnw3YzL"
+    type: 'video',
+    src: "https://www.youtube.com/embed/fWZnUzkPM6w",
+    thumbnail: "https://img.youtube.com/vi/fWZnUzkPM6w/0.jpg",
+    alt: "Walk",
+    title: "Walk",
+    category: "Video Art",
+    videoId: "fWZnUzkPM6w"
   },
   {
     id: '6',
+    type: 'video',
+    src: "https://www.youtube.com/embed/lunHW1b4wds",
+    thumbnail: "https://img.youtube.com/vi/lunHW1b4wds/0.jpg",
+    alt: "All Alone (Vertical)",
+    title: "All Alone (Vertical)",
+    category: "Video Art",
+    videoId: "lunHW1b4wds"
+  },
+  {
+    id: '7',
+    type: 'video',
+    src: "https://www.youtube.com/embed/Ktyvv3P2fsc",
+    thumbnail: "https://img.youtube.com/vi/Ktyvv3P2fsc/0.jpg",
+    alt: "Particle System",
+    title: "Particle System",
+    category: "Video Art",
+    videoId: "Ktyvv3P2fsc"
+  },
+  {
+    id: '8',
+    type: 'video',
+    src: "https://www.youtube.com/embed/nCVaUMuXq_o",
+    thumbnail: "https://img.youtube.com/vi/nCVaUMuXq_o/0.jpg",
+    alt: "Brutalist Tunnel",
+    title: "Brutalist Tunnel",
+    category: "Video Art",
+    videoId: "nCVaUMuXq_o"
+  },
+  {
+    id: '9',
+    type: 'video',
+    src: "https://www.youtube.com/embed/HRXSiahwpWI",
+    thumbnail: "https://img.youtube.com/vi/HRXSiahwpWI/0.jpg",
+    alt: "Purple Block",
+    title: "Purple Block",
+    category: "Video Art",
+    videoId: "HRXSiahwpWI"
+  },
+  {
+    id: '10',
+    type: 'video',
+    src: "https://www.youtube.com/embed/R2P-vxgBMtk",
+    thumbnail: "https://img.youtube.com/vi/R2P-vxgBMtk/0.jpg",
+    alt: "Descent",
+    title: "Descent",
+    category: "Video Art",
+    videoId: "R2P-vxgBMtk"
+  },
+  {
+    id: '11',
+    type: 'video',
+    src: "https://www.youtube.com/embed/OtEcKycbIUI",
+    thumbnail: "https://img.youtube.com/vi/OtEcKycbIUI/0.jpg",
+    alt: "Process 360",
+    title: "Process 360",
+    category: "Video Art",
+    videoId: "OtEcKycbIUI"
+  },
+  {
+    id: '12',
+    type: 'video',
+    src: "https://www.youtube.com/embed/0Skbeg1-fVU",
+    thumbnail: "https://img.youtube.com/vi/0Skbeg1-fVU/0.jpg",
+    alt: "Monolith Music Video",
+    title: "Monolith Music Video",
+    category: "Music Video",
+    videoId: "0Skbeg1-fVU"
+  },
+  {
+    id: '13',
+    type: 'video',
+    src: "https://www.youtube.com/embed/fE4QEv86kPk",
+    thumbnail: "https://img.youtube.com/vi/fE4QEv86kPk/0.jpg",
+    alt: "Sand 360",
+    title: "Sand 360",
+    category: "Video Art",
+    videoId: "fE4QEv86kPk"
+  },
+  {
+    id: '14',
     type: 'shader',
-    src: "https://shaderpark.com/embed/-O9lgV0A2KUUj1BUED0u",
-    thumbnail: "/placeholder.svg?height=400&width=400",
+    src: "https://shaderpark.com/embed/-O9oldSvo2zAbo-H2Ri9",
+    thumbnail: "https://shaderpark.com/embed/-O9oldSvo2zAbo-H2Ri9",
     alt: "Abstract shader art",
-    title: "Shader 2",
+    title: "Shader 1",
     category: "Shader Art",
-    shaderId: "-O9lgV0A2KUUj1BUED0u"
+    shaderId: "-O9oldSvo2zAbo-H2Ri9"
   }
 ]
 
-export default function Component() {
+function Gallery() {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null)
   const [activeTab, setActiveTab] = useState('all')
+  const [iframeKey, setIframeKey] = useState(0)
 
   const filteredItems = activeTab === 'all' 
     ? galleryItems 
@@ -7357,6 +7440,7 @@ export default function Component() {
   const openLightbox = (item: GalleryItem) => {
     setSelectedItem(item)
     document.body.style.overflow = 'hidden'
+    setIframeKey(prevKey => prevKey + 1)
   }
 
   const closeLightbox = () => {
@@ -7371,12 +7455,27 @@ export default function Component() {
       ? (currentIndex > 0 ? currentIndex - 1 : filteredItems.length - 1)
       : (currentIndex < filteredItems.length - 1 ? currentIndex + 1 : 0)
     setSelectedItem(filteredItems[newIndex])
+    setIframeKey(prevKey => prevKey + 1)
   }
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeLightbox()
+      } else if (event.key === 'ArrowLeft') {
+        navigateItem('prev')
+      } else if (event.key === 'ArrowRight') {
+        navigateItem('next')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [selectedItem])
 
   return (
     <section className="py-12 px-4 bg-[#0A0A0A]">
       <div className="container mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-2">Gallery</h1>
         <p className="text-muted-foreground text-center mb-8">Explore my work across different mediums</p>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -7388,7 +7487,7 @@ export default function Component() {
           </TabsList>
 
           <TabsContent value={activeTab}>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {filteredItems.map((item) => (
                 <Card 
                   key={item.id} 
@@ -7397,12 +7496,21 @@ export default function Component() {
                 >
                   <CardContent className="p-0">
                     <div className="relative aspect-square">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.alt}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
+                      {item.type === 'shader' ? (
+                        <iframe
+                          src={item.thumbnail}
+                          title={item.title}
+                          className="w-full h-full"
+                          frameBorder="0"
+                        />
+                      ) : (
+                        <Image
+                          src={item.thumbnail}
+                          alt={item.alt}
+                          fill
+                          className="object-cover"
+                        />
+                      )}
                       {item.type === 'video' && (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <Play className="w-12 h-12 text-white opacity-70" />
@@ -7410,8 +7518,8 @@ export default function Component() {
                       )}
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <div className="text-center text-white p-4">
-                          <h3 className="text-xl font-bold">{item.title}</h3>
-                          <p className="text-sm mt-2">{item.category}</p>
+                          <h3 className="text-lg font-bold line-clamp-1">{item.title}</h3>
+                          <p className="text-sm mt-2 opacity-80">{item.category}</p>
                         </div>
                       </div>
                     </div>
@@ -7435,7 +7543,7 @@ export default function Component() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 text-white hover:bg-white/20"
+              className="absolute top-4 right-4 z-50 text-white hover:bg-white/20"
               onClick={closeLightbox}
             >
               <X className="h-6 w-6" />
@@ -7444,7 +7552,7 @@ export default function Component() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 text-white hover:bg-white/20"
+              className="absolute left-4 z-50 text-white hover:bg-white/20"
               onClick={() => navigateItem('prev')}
             >
               <ChevronLeft className="h-6 w-6" />
@@ -7452,14 +7560,19 @@ export default function Component() {
 
             <div className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4">
               {selectedItem.type === 'video' ? (
-                <video 
-                  src={selectedItem.src}
-                  className="w-full h-full object-contain"
-                  controls
-                  autoPlay
-                />
+                <iframe
+                  key={iframeKey}
+                  width="100%"
+                  height="100%"
+                  src={`${selectedItem.src}?autoplay=1`}
+                  title={selectedItem.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               ) : selectedItem.type === 'shader' ? (
                 <iframe 
+                  key={iframeKey}
                   src={selectedItem.src}
                   className="w-full h-full"
                   frameBorder="0"
@@ -7477,14 +7590,14 @@ export default function Component() {
               )}
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
                 <h3 className="text-xl font-bold">{selectedItem.title}</h3>
-                <p className="text-sm mt-1">{selectedItem.category}</p>
+                <p className="text-sm mt-1 opacity-80">{selectedItem.category}</p>
               </div>
             </div>
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 text-white hover:bg-white/20"
+              className="absolute right-4 z-50 text-white hover:bg-white/20"
               onClick={() => navigateItem('next')}
             >
               <ChevronRight className="h-6 w-6" />
@@ -7493,6 +7606,15 @@ export default function Component() {
         </div>
       )}
     </section>
+  )
+}
+
+export default function Page() {
+  return (
+    <main className="min-h-screen bg-black text-white">
+      <h1 className="text-4xl font-bold text-center py-8">My Portfolio</h1>
+      <Gallery />
+    </main>
   )
 }
   ```
